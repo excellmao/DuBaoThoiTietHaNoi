@@ -4,3 +4,4 @@ scikit-learn
 requests
 joblib
 matplotlib
+python-dotenv
