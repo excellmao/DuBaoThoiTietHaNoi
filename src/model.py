@@ -1,9 +1,8 @@
-from pyexpat import features
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, r2_score
-import joblib
-from src.config import TARGETS
+import joblib  # <--- 1. Thư viện dùng để lưu model
+from src.config import TARGETS, MODEL_PATH # <--- 2. Nhớ import MODEL_PATH
 
 def train_model(df, lag_cols):
     """Huan luyen va danh gia mo hinh"""
@@ -23,4 +22,18 @@ def train_model(df, lag_cols):
     print(f"   R2 Score: {r2_score(y_test, preds):.4f}")
     print(f"   MAE: {mean_absolute_error(y_test, preds):.2f}")
 
+    #Luu model
+    print(f"Đang lưu mô hình vào: {MODEL_PATH}")
+    joblib.dump(model, MODEL_PATH)
+
     return model, features
+
+def load_trained_model():
+    """Hàm tải mô hình đã lưu (nếu có)"""
+    try:
+        model = joblib.load(MODEL_PATH)
+        print(f"Đã tải mô hình từ: {MODEL_PATH}")
+        return model
+    except FileNotFoundError:
+        print("Chưa có file model.pkl. Cần huấn luyện lại.")
+        return None
