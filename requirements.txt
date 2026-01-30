@@ -3,5 +3,7 @@ numpy
 scikit-learn
 requests
 joblib
+streamlit
 matplotlib
 python-dotenv
+statsmodels
